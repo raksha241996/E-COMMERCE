@@ -1,26 +1,44 @@
 import React from 'react';
-import logo from '../assets/logo.svg';
-import '../styles/containerStyles/App.scss';
+import '../styles/containerStyles/App.scss'
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import Home from './Home'
+import HomeIcon from '@material-ui/icons/Home'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+function Products() {
+  return <h2>Products</h2>;
+}
+
+function Cart() {
+  return <h2>Cart</h2>;
+}
+class App extends React.Component {
+
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      activeClass: "#active"
+    }
+  }
+
+  render() {
+    return (
+      <Router>
+        <nav >
+          <div className="topnav">
+            <a href="#home" tabindex="1" ><Link to="/"><HomeIcon/>Home</Link></a>
+            <a href="#produts" tabindex="1"> <Link to="/products/">Products</Link></a>
+            <a href="#cart"><Link to="/cart/">Cart</Link></a>
+          </div>
+        </nav>
+
+        <Route path="/" exact component={Home} />
+        <Route path="/products/" component={Products} />
+        <Route path="/cart/" component={Cart} />
+      </Router>
+
+    );
+  }
 }
 
 export default App;
