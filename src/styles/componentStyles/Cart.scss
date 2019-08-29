@@ -1,0 +1,29 @@
+*{
+    padding : 0;
+}
+#itemListDisplay {
+    display: inline-block;
+    width : 60%;
+    height : auto;
+    margin-right: 1%;    
+    background-color : white;
+}
+
+#flexContainer {
+    display: flexbox;
+    flex-flow: column;
+}
+
+#priceDetails {
+    float : right;
+    background-color: white;
+    width : 30%;
+    height : 150px;
+    margin-bottom: 1%;
+    position: sticky; 
+}
+
+.CartBody {
+    margin : 3% 5% 1% 5%;
+    // background-color : #f1f3f6;
+}
