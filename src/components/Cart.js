@@ -2,13 +2,6 @@ import React, { Component } from 'react'
 import '../styles/componentStyles/Cart.scss'
 
 
-// const CalculatePrice = () => {
-        
-// }
-
-
-let items = '';
-
 export default class Cart extends Component {
     constructor(props){
         super(props);
@@ -58,11 +51,28 @@ export default class Cart extends Component {
         items = items.filter(x => x.id !== id);
         this.setState({items : items});
         this.setLocal(this.state.items);
-        console.log(`Item with id ${id} Deleted`); 
+        // console.log(`Item with id ${id} Deleted`); 
     }
 
+    CalculatePrice = (props) => {
+        let total = 0;
+        let items = props.item
 
-    
+        console.log(items.length);
+
+
+        for(let i=0;i<items.length;i++){
+            total += (parseInt(items[i].price)*parseInt(items[i].quantity))
+        }
+
+        return (
+            <div>
+                <h3>Price of {items.length} items</h3>
+                <hr />
+                <h3>Total Amount : {total}</h3>
+            </div>
+        )
+    }
 
     CreateListoOfItems = (props) => {
         let itemList = [];
@@ -73,7 +83,7 @@ export default class Cart extends Component {
                         <div id="imgndisnbtn">
                             <img src={item.image} alt="item"/>
                             <p>{item.disc}</p>
-                            <p>{item.quantity}</p>
+                            <p>Quantity : {item.quantity}, Price : {item.price}$</p>
                             <button onClick ={() => {this.removeItem(item.id)}}>Remove</button>
                         </div>
                         <div id="btns">
@@ -98,7 +108,8 @@ export default class Cart extends Component {
                         </div>
                     </div>
                     <div id="priceDetails">
-                        <p>Price Details</p>
+                        <div>Price Detils</div>
+                        <this.CalculatePrice item={this.state.items} />                        
                     </div>   
                 </div>
         )
