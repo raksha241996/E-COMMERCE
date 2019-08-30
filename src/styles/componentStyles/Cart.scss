@@ -1,5 +1,8 @@
 *{
-    padding : 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    
 }
 #itemListDisplay {
     display: inline-block;
@@ -13,6 +16,92 @@
     display: flexbox;
     flex-flow: column;
 }
+
+#item{
+    border : 1px solid black;
+    border-collapse: collapse;
+    padding : 20px 20px 0 20px;
+    height : auto;
+
+    #imgndisnbtn {
+        display: flex;
+        flex-direction : row;
+        justify-content: flex-start; 
+        align-content: center;
+        align-items: baseline;
+
+        img {   
+                flex : 0 0;
+                left : 0%;
+                width : 100px;
+                height : 100px;
+            }
+
+        p { 
+            flex : 0 0 250px;
+            display: flex;
+            justify-content: stretch;
+            padding: 5px;
+            margin: auto; 
+            }
+        
+        button {
+                flex : 0 0 100px;
+                border: none;
+                color: white;
+                outline:none;
+                border-radius: 5%;
+                background-color: #f44336;
+                align-self: end;
+                width : 100px;
+                height : 50px;
+                margin: auto;
+                right : -50px;
+
+                &:hover {
+                    background: #da190b;   
+                }
+            }
+    }
+    
+    #btns {
+        display: flex;
+        justify-content: flex-start;
+        justify-items: stretch;
+        margin: 5px; 
+
+        button {
+            width: 35px;
+            height : 35px;
+            color : white;
+            border-radius: 50%;
+            border : none;
+            outline:none;
+            // border : none;
+            padding: 2px;
+            margin-left : 10px;
+
+            &#plus {
+                background-color: #2196F3;
+                
+                &:hover {
+                    background: #0b7dda;
+                }
+            }
+            
+            &#minus {
+                background-color: #f44336;
+                &:hover {
+                    background: #da190b;
+                }
+            }
+
+        }        
+    }
+    
+    
+}
+
 
 #priceDetails {
     float : right;

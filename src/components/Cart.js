@@ -1,51 +1,49 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import  '../styles/componentStyles/Cart.scss';
+import React, { Component } from 'react'
+import '../styles/componentStyles/Cart.scss'
 
-const useStyles = makeStyles(theme => ({
-    root: {
-      padding: theme.spacing(3, 2),
-    },
-  }));
 
-const Cart = () => {
-    const classes = useStyles();
+// const items = JSON.parse(localStorage.getItem('items'));
 
+export default class Cart extends Component {
+
+    
+    render() {
         return (
-            <div class="CartBody">                
-                <div id="itemListDisplay">
-                    <div id="flexContainer">
-                    <Paper className={classes.root} elevation="3">
-                        <Typography variant="h5" component="h3">
-                            This is a sheet of paper.
-                        </Typography>
-                        <Typography component="p">
-                            Paper can be used to build surface or other elements for your application.
-                        </Typography>
-                    </Paper>
-                    
-                    <Paper className={classes.root} elevation="3">
-                        <Typography variant="h5" component="h3">
-                            This is a sheet of paper.
-                        </Typography>
-                        <Typography component="p">
-                            Paper can be used to build surface or other elements for your application.
-                        </Typography>
-                    </Paper>
-                    
+            <div className="CartBody">                
+                    <div id="itemListDisplay">
+                        <div id="flexContainer">
+                            <div id="item">
+                                <div id="imgndisnbtn">
+                                    <img src="https://hackernoon.com/hn-images/1*To2H39eauxaeYxYMtV1afQ.png" alt="item"/>
+                                    <p>Hello</p>
+                                    <button>Remove</button>
+                                </div>
+                                <div id="btns">
+                                    <button id="plus">+</button>
+                                    <button id="minus">-</button>
+                                </div>    
+                            </div>
+                            <div id="item">
+                                <div id="imgndisnbtn">
+                                    <img src="https://hackernoon.com/hn-images/1*To2H39eauxaeYxYMtV1afQ.png" alt="item"/>
+                                    <p>DiscriptionDiscriptionDiscripti onDiscriptionDiscriptionDiscription</p>
+                                    <button>Remove</button>
+                                </div>
+                                <div id="btns">
+                                    <button id="plus">+</button>
+                                    <button id="minus">-</button>
+                                </div>    
+                            </div>
+                                                 
+                        </div>
                     </div>
+    
+                    <div id="priceDetails">
+                        <p>Price Details</p>
+                    </div>
+                    
+                    
                 </div>
-
-                <div id="priceDetails">
-                    <p>Price Details</p>
-                </div>
-                
-                
-            </div>
-            
         )
+    }
 }
-
-export default Cart;
