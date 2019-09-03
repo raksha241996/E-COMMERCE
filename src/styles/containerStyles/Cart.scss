@@ -1,69 +1,134 @@
-.mainCart{
-    margin:5px;
-    display:"flex";
-    flex-direction: row;
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    
+}
+#itemListDisplay {
+    display: inline-block;
+    width : 60%;
+    height : auto;
+    margin-right: 1%;    
+    background-color : white;
 }
 
-.eachItem{
-    border:ridge;
-    margin:5px;
-    padding:10px;
-    display:grid;
-    grid-template-columns: auto auto auto;
-    grid-column-gap: 5px;
-}
-.name{
-    grid-template-columns: auto auto auto;
-    grid-column-gap: 5px;
-   
-    padding:20px;
-    font-size: 20px;
-    font-family: 'Courier New', Courier, monospace;
-    flex-direction: row
-
+#flexContainer {
+    display: flexbox;
+    flex-flow: column;
 }
 
-.numSpinner{
+#item{
+    border : 1px solid black;
+    margin-bottom: 2px;
+    padding : 20px 20px 0 20px;
+    height : auto;
 
- align-self: center;
- 
+    #imgndisnbtn {
+        display: flex;
+        flex-direction : row;
+        justify-content: flex-start; 
+        align-content: center;
+        align-items: baseline;
 
-}
+        img {   
+                flex : 0 0 100px;
+                left : 0%;
+                width : 100px;
+                height : 100px;
+            }
 
-.deleteItem{
-    align-self: center;
-   
-    padding-left: 30px;
-}
+        p { 
+            flex : 0 0 250px;
+            display: flex;
+            justify-content: stretch;
+            padding: 5px;
+            margin: auto; 
+            }
+        
+        button {
+                flex : 0 0 100px;
+                border: none;
+                color: white;
+                outline:none;
+                border-radius: 5%;
+                background-color: #f44336;
+                align-self: end;
+                width : 100px;
+                height : 50px;
+                margin: auto;
+                right : -50px;
+
+                &:hover {
+                    background: #da190b;   
+                }
+                
+                &:active {
+                    transform : translateY(2px);
+                }
+            }
+    }
+    
+    #btns {
+        display: flex;
+        justify-content: flex-start;
+        justify-items: stretch;
+        margin: 5px; 
+
+        button {
+            width: 35px;
+            height : 35px;
+            color : white;
+            border-radius: 50%;
+            border : none;
+            outline:none;
+            // border : none;
+            padding: 2px;
+            margin-left : 10px;
+
+            &#plus {
+                background-color: #2196F3;
 
 
-.spinner{
-    align-self: center;
-    align-items: center;
-    align-content: center;
-    justify-content: center;
-    padding: 20px;
+                
+                &:hover {
+                    background: #0b7dda;
+                }
+
+                &:active {
+                    transform : translateY(2px);
+                }
+            }
+            
+            &#minus {
+                background-color: #f44336;
+                &:hover {
+                    background: #da190b;
+                }
+
+                &:active {
+                    transform : translateY(2px);
+                }
+            }
+
+        }        
+    }
+    
     
 }
 
-.description{
-    color:black;
-    font-size: 30px;
-    font-family: "Cambria, Cochin, Georgia, Times, 'Times New Roman', serif";
-    text-decoration: underline;
+
+#priceDetails {
+    float : right;
+    background-color: white;
+    width : 30%;
+    height : 150px;
+    margin-bottom: 1%;
+    position: sticky; 
+    padding : 15px;
+    font-family: 'Times New Roman', Times, serif
 }
 
-.SubButton{
-   padding-top: 5px;
-   height: 40px;
-   margin-left: 30px; 
-}
-
-.spanStyle{
-    padding: 150px;
-}
-
-.AddButton{
-    padding: 5px;
-    height: 40px;
+.CartBody {
+    margin : 3% 5% 1% 5%;
+    
 }

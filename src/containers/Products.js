@@ -20,7 +20,7 @@ export default class Products extends React.Component {
     }
 
     componentWillMount() {
-        axios.get('https://api.myjson.com/bins/110rw7')
+        axios.get('https://api.myjson.com/bins/wvekv')
         .then( (response) => {
           console.log("response", response.data);
           this.setState({
@@ -34,15 +34,27 @@ export default class Products extends React.Component {
         .catch( (error) => {
           console.log(error);
         }); 
+
+        this.cart = JSON.parse(localStorage.getItem('cart'));
          
 
     }
 
+    updateQuantity(product){
+        let index = this.cart.findIndex(x => x.id === product.id);
+        if(index == -1){
+            this.cart.push(product);
+        }
+        else {
+            this.cart[index].quantity = parseInt(this.cart[index].quantity)+1;            
+        }
+        
+    }
+
     toggleButton( products){
-        console.log(products)
-        alert('Product added to Cart')
         this.setState({disable : true})
-        this.cart.push(products)
+        alert("Item Added");
+        this.updateQuantity(products);
         localStorage.setItem("cart", JSON.stringify(this.cart));
 
     }
@@ -58,8 +70,8 @@ export default class Products extends React.Component {
                         <div className="imageBox">
                             <img src={products.img} alt={products.img}  />
                         </div>
-                        <p className="name">{products.name} <br /><br />{products.description}</p>
-                        <Button variant="contained" color="primary" className="btn"  onClick={()=>this.toggleButton(products)} >
+                        <p className="name">{products.name} <br /><br /> Price :${products.Price}</p>
+                        <Button variant="contained" color="primary" className="button"  onClick={()=>this.toggleButton(products)} >
                         <AddShoppingCartIcon />
                          Add To Cart !!
                         </Button>

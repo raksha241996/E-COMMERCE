@@ -1,115 +1,130 @@
-import React from 'react';
-import '../styles/containerStyles/Cart.scss'
-import DeleteIcon from '@material-ui/icons/Delete';
-import AddIcon from '@material-ui/icons/Add'
-import SubIcon from '@material-ui/icons/Maximize'
-import Button from '@material-ui/core/Button';
-export class Cart extends React.Component {
+import React, { Component } from 'react';
+import '../styles/containerStyles/Cart.scss';
 
 
-
-    constructor(props) {
-        super(props)
+export default class Cart extends Component {
+    constructor(props){
+        super(props);
         this.state = {
-            cart: [],
-            clicks: 1,
-            show: true
-        }
+            items : []
+        };
 
-        this.cart = []
     }
 
+    componentDidMount(){
+        // fetch('https://api.myjson.com/bins/ww7qv')   
+        // .then(res => res.json())
+        // .then(result => {this.setLocal(result.items)});
+        // this.getLocal('cart');
+        this.setState({items : this.getLocal()});   
+    }
 
-    componentWillMount() {
-        console.log('in cart initially' + this.state.cart)
-        var retrievedData = localStorage.getItem("cart");
-        if (retrievedData) {
-            this.setState({
-                cart: this.state.cart.concat(JSON.parse(retrievedData)
-                )
-            })
+    componentWillUnmount() {
+        this.setLocal(this.state.items);
+    }
+
+    getLocal = () => JSON.parse(localStorage.getItem('cart')) 
+    setLocal = (items) => {localStorage.setItem('cart',JSON.stringify(items))}
+
+
+    increaseByOne = (id) => {
+        let items = this.state.items;
+        let ite = items.findIndex(x =>  x.id === id);
+        items[ite].quantity= parseInt(items[ite].quantity)+1;
+        this.setState({items : items});
+        this.setLocal(this.state.items);
+    }
+    
+    
+    decreaseByOne = (id) => {
+        let items = this.state.items;
+        let ite = items.findIndex(x =>  x.id === id);
+        
+        if(items[ite].quantity > 1){
+            items[ite].quantity= parseInt(items[ite].quantity)-1;  
         }
         else {
-            alert('No item in Cart')
+            alert("Click Remove to delete the item")
+        }     
+        this.setState({items : items});
+        this.setLocal(this.state.items);
+    }
+
+    removeItem = (id) => {
+        let items = this.state.items;
+        items = items.filter(x => x.id !== id);
+        this.setState({items : items});
+        this.setLocal(this.state.items);
+        // console.log(`Item with id ${id} Deleted`); 
+    }
+
+    CalculatePrice = (props) => {
+        let total = 0;
+        let items = props.item
+
+        console.log(items.length);
+
+
+        for(let i=0;i<items.length;i++){
+            total += (parseInt(items[i].Price)*parseInt(items[i].quantity))
         }
-    }
 
-    IncrementItem = () => {
-
-        this.setState({ clicks: this.state.clicks + 1 });
-    }
-
-    DecreaseItem = () => {
-
-        if (this.state.clicks > 1) {
-            this.setState({ clicks: this.state.clicks - 1 });
-        }
-        else {
-            alert('Minimum quantity is 1, use delete option to remove the item')
-        }
-
-
-    }
-
-    ToggleClick = () => {
-
-        this.setState({ show: !this.state.show });
-
-    }
-
-    deleteItem(cart) {
-        var key = cart.id
-        var index;
-        var cartArray = this.state.cart
-        var pos = cartArray.find((prod, i) => {
-            if (prod.id == key) {
-                index = i
-            }
-        })
-
-        cartArray.splice(index, 1)
-        this.setState({ cart: cartArray })
-
-        localStorage.setItem("cart", this.state.cart)
-
-    }
-
-
-    render() {
-        console.log('inside render' + this.state.cart)
         return (
+            <div>
+                <h3>Price of {items.length} items</h3>
+                <hr />
+                <h3>Total Amount : {total}</h3>
+            </div>
+        )
+    }
 
-            <div className="mainCart">
-                {this.state.cart.map(cart => (
-                    <div className="eachItem">
-                        <div className="imageStyle">
-                            <img src={cart.img} alt={cart.img} width="200" height="auto" />
+    CreateListoOfItems = (props) => {
+        let itemList = [];
+        // if(props.items.length < 1) {
+        //     return(
+        //         <h1>CART IS EMPTY!!</h1>
+        //     )
+        // }
+        // else {
+            
+        
+        props.item.forEach((item) => {
+            itemList.push(
+                    <div id="item" key = {item.id}>
+                        <div id="imgndisnbtn">
+                            <img src={item.img} alt="item"/>
+                            <p>{item.description}</p>
+                            <p>Quantity : {item.quantity}, Price : {item.Price}$</p>
+                            <button onClick ={() => {this.removeItem(item.id)}}>Remove</button>
                         </div>
-                        <div className="numSpinner">
-                            <p className="name">
-                                <p className="description">Description :</p> <br />{cart.name} <br /><br />{cart.description}</p>
-                            <div className="spinner">
-                                <Button variant="contained" color="primary"  >
-                                    <AddIcon onClick={this.IncrementItem} />
-                                </Button>
-                                <span className="spanstyle"> {this.state.clicks} </span>
-                                <Button variant="contained" color="primary"  >
-                                    <SubIcon onClick={this.DecreaseItem} />
-                                </Button>
+                        <div id="btns">
+                            <button id="plus" onClick = {() => {this.increaseByOne(item.id)}}>+</button>
+                            <button id="minus" onClick ={() => {this.decreaseByOne(item.id)}}>-</button>
+                        </div>    
+                    </div>    
+            )
+        });
 
-                            </div>
-                        </div>
+        return itemList;
+    }
 
-                        <div className="deleteItem">
-                            <Button variant="contained" color="secondary" onClick={() => this.deleteItem(cart)} >
-                                <DeleteIcon fontSize="large" />
-                            </Button>
+  
 
+    
+    render() {
+        return (
+            <div className="CartBody">                
+                    <div id="itemListDisplay">
+                        <div id="flexContainer">
+                            <this.CreateListoOfItems item={this.state.items}/>                                                                                         
                         </div>
                     </div>
-                )
-                )}
-            </div>
-        );
+                    <div id="priceDetails">
+                        <div>Price Detils</div>
+                        <this.CalculatePrice item={this.state.items} />                        
+                    </div>   
+                </div>
+        )
     }
 }
+

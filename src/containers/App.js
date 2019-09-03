@@ -6,8 +6,7 @@ import Products from './Products'
 import HomeIcon from '@material-ui/icons/Home'
 import ShopIcon from '@material-ui/icons/Shop'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
-import {Cart} from './Cart'
-
+import Cart from './Cart';
 
 class App extends React.Component {
 
@@ -16,8 +15,8 @@ class App extends React.Component {
       <Router>
         <nav >
           <div className="topnav">
-            <a href="#home" tabindex="1" ><Link to="/"><HomeIcon/>Home</Link></a>
-            <a href="#produts" tabindex="1"> <Link to="/products/"><ShopIcon/>Products</Link></a>
+            <a href="#home" tabIndex="1" ><Link to="/"><HomeIcon/>Home</Link></a>
+            <a href="#produts" tabIndex="1"> <Link to="/products/"><ShopIcon/>Products</Link></a>
             <a href="#cart"><Link to="/cart/"><ShoppingCartIcon/>Cart</Link></a>
           </div>
         </nav>
