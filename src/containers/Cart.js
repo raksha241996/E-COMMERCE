@@ -119,10 +119,14 @@ export default class Cart extends Component {
                             <this.CreateListoOfItems item={this.state.items}/>                                                                                         
                         </div>
                     </div>
-                    <div id="priceDetails">
-                        <div>Price Detils</div>
+                    {this.state.items.length ? <div id="priceDetails">
+                        <div>Price Details</div>
                         <this.CalculatePrice item={this.state.items} />                        
-                    </div>   
+                    </div>    : <p id="noItems">No Items In Cart</p> }
+                    {/* <div id="priceDetails">
+                        <div>Price Details</div>
+                        <this.CalculatePrice item={this.state.items} />                        
+                    </div>    */}
                 </div>
         )
     }
