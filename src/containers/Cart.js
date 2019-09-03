@@ -7,7 +7,7 @@ export default class Cart extends Component {
         super(props);
         this.state = {
             items : []
-        };
+            };
 
     }
 
@@ -16,7 +16,8 @@ export default class Cart extends Component {
         // .then(res => res.json())
         // .then(result => {this.setLocal(result.items)});
         // this.getLocal('cart');
-        this.setState({items : this.getLocal()});   
+        this.setState({items : this.getLocal(), count : this.getCount()});   
+        // this.setCount(this.state.items.length);
     }
 
     componentWillUnmount() {
@@ -24,14 +25,14 @@ export default class Cart extends Component {
     }
 
     getLocal = () => JSON.parse(localStorage.getItem('cart')) 
-    setLocal = (items) => {localStorage.setItem('cart',JSON.stringify(items))}
-
+    setLocal = (items) => {localStorage.setItem('cart',JSON.stringify(items));}
+    getCount = () => parseInt(localStorage.getItem('count'))
 
     increaseByOne = (id) => {
         let items = this.state.items;
         let ite = items.findIndex(x =>  x.id === id);
         items[ite].quantity= parseInt(items[ite].quantity)+1;
-        this.setState({items : items});
+        this.setState({items : items, count : this.getCount()});
         this.setLocal(this.state.items);
     }
     
@@ -46,15 +47,19 @@ export default class Cart extends Component {
         else {
             alert("Click Remove to delete the item")
         }     
-        this.setState({items : items});
+        this.setState({items : items, count : items.length});
         this.setLocal(this.state.items);
     }
 
     removeItem = (id) => {
         let items = this.state.items;
         items = items.filter(x => x.id !== id);
-        this.setState({items : items});
-        this.setLocal(this.state.items);
+        console.log(items);
+        this.setLocal(items);
+        localStorage.setItem('count', items.length); 
+        this.props.handleCount(items.length);
+        this.setState({items : this.getLocal()});
+        
         // console.log(`Item with id ${id} Deleted`); 
     }
 
@@ -71,22 +76,15 @@ export default class Cart extends Component {
 
         return (
             <div>
-                <h3>Price of {items.length} items</h3>
+                <p id="countItem">Total {items.length} items</p>
                 <hr />
-                <h3>Total Amount : {total}</h3>
+                <p id="totalPrice">Total Amount : ${total}</p>
             </div>
         )
     }
 
     CreateListoOfItems = (props) => {
-        let itemList = [];
-        // if(props.items.length < 1) {
-        //     return(
-        //         <h1>CART IS EMPTY!!</h1>
-        //     )
-        // }
-        // else {
-            
+        let itemList = [];            
         
         props.item.forEach((item) => {
             itemList.push(
@@ -94,7 +92,7 @@ export default class Cart extends Component {
                         <div id="imgndisnbtn">
                             <img src={item.img} alt="item"/>
                             <p>{item.description}</p>
-                            <p>Quantity : {item.quantity}, Price : {item.Price}$</p>
+                            <p>Quantity : {item.quantity} <br />Price : $  {item.Price}</p>
                             <button onClick ={() => {this.removeItem(item.id)}}>Remove</button>
                         </div>
                         <div id="btns">
@@ -120,8 +118,11 @@ export default class Cart extends Component {
                         </div>
                     </div>
                     <div id="priceDetails">
-                        <div>Price Detils</div>
-                        <this.CalculatePrice item={this.state.items} />                        
+                        <div id="priceHead">Price Details</div>
+                        <div id="calculations" >
+                           <this.CalculatePrice item={this.state.items} />  
+                        </div>
+                                               
                     </div>   
                 </div>
         )

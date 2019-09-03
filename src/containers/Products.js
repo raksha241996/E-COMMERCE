@@ -46,7 +46,7 @@ export default class Products extends React.Component {
                 quantity : 1
             },
             {
-                id: 1,
+                id: 4,
                 name: "Red Skirt",
                 img: skirt,
                 description: "Price : Rs.700/- ",
@@ -55,7 +55,7 @@ export default class Products extends React.Component {
             }
             ,
             {
-                id: 2,
+                id: 5,
                 name: "Canvas shoes",
                 img: shoes,
                 description: "Canvas shoes",
@@ -63,7 +63,7 @@ export default class Products extends React.Component {
                 quantity : 1
             },
             {
-                id: 3,
+                id: 6,
                 name: "Pump Heel",
                 img: heels,
                 description: "Pump Heel",
@@ -88,12 +88,16 @@ export default class Products extends React.Component {
 
     updateQuantity(product){
         let index = this.cart.findIndex(x => x.id === product.id);
+        console.log(product.id, "index is ", index)
         if(index == -1){
             this.cart.push(product);
+            // localStorage.setItem('count',1);
         }
         else {
-            this.cart[index].quantity = parseInt(this.cart[index].quantity)+1;            
-        }
+            this.cart[index].quantity = parseInt(this.cart[index].quantity)+1;
+            }
+        localStorage.setItem('count', this.cart.length);
+        this.props.handleCount(this.cart.length);
         
     }
 

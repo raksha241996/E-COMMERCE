@@ -9,6 +9,23 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 import Cart from './Cart';
 
 class App extends React.Component {
+  constructor(props){
+    super(props);
+
+    this.state ={
+      count : 0
+    };
+
+    this.handleCount = this.handleCount.bind(this);
+  }
+
+  componentDidMount(){
+    this.setState({count : localStorage.getItem('count')})
+  }
+
+  handleCount(count){
+    this.setState({count : count});
+  }
 
   render() {
     return (
@@ -17,12 +34,12 @@ class App extends React.Component {
           <div className="topnav">
             <a href="#home" tabIndex="1" ><Link to="/"><HomeIcon/>Home</Link></a>
             <a href="#produts" tabIndex="1"> <Link to="/products/"><ShopIcon/>Products</Link></a>
-            <a href="#cart"><Link to="/cart/"><ShoppingCartIcon/>Cart</Link></a>
+            <a href="#cart"><Link to="/cart/"><ShoppingCartIcon/>Cart</Link> <span id="count">{this.state.count}</span> </a>
           </div>
         </nav>
         <Route path="/" exact component={Home} />
-        <Route path="/products/" component={Products} />
-        <Route path="/cart/" component={Cart} />
+        <Route path="/products/"  render={() =>  <Products handleCount = {this.handleCount} /> } />
+        <Route path="/cart/" render={() =>  <Cart handleCount = {this.handleCount} />  } />
       </Router>
 
     );

@@ -1,7 +1,6 @@
 import React from 'react';
 import welcomeimage from '../assets/welcomeimage.jpg'
 import '../styles/containerStyles/HomeStyle.scss'
-import Button from '@material-ui/core/Button';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Products from "../containers/Products"
 export default function Home() {
