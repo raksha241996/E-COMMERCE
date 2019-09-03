@@ -91,8 +91,8 @@ export default class Cart extends Component {
                     <div id="item" key = {item.id}>
                         <div id="imgndisnbtn">
                             <img src={item.img} alt="item"/>
-                            <p>{item.description}</p>
-                            <p>Quantity : {item.quantity} <br />Price : $  {item.Price}</p>
+                                <p>{item.description}</p>
+                                <p>Quantity : {item.quantity} <br />Price : $  {item.Price}</p>                          
                             <button onClick ={() => {this.removeItem(item.id)}}>Remove</button>
                         </div>
                         <div id="btns">
