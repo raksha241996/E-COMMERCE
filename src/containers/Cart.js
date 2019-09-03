@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import '../styles/componentStyles/Cart.scss'
+import React, { Component } from 'react';
+import '../styles/containerStyles/Cart.scss';
 
 
 export default class Cart extends Component {
@@ -12,9 +12,10 @@ export default class Cart extends Component {
     }
 
     componentDidMount(){
-        fetch('https://api.myjson.com/bins/ww7qv')   
-        .then(res => res.json())
-        .then(result => {this.setLocal(result.items)});
+        // fetch('https://api.myjson.com/bins/ww7qv')   
+        // .then(res => res.json())
+        // .then(result => {this.setLocal(result.items)});
+        // this.getLocal('cart');
         this.setState({items : this.getLocal()});   
     }
 
@@ -22,8 +23,8 @@ export default class Cart extends Component {
         this.setLocal(this.state.items);
     }
 
-    getLocal = () => JSON.parse(localStorage.getItem('items')) 
-    setLocal = (items) => {localStorage.setItem('items',JSON.stringify(items))}
+    getLocal = () => JSON.parse(localStorage.getItem('cart')) 
+    setLocal = (items) => {localStorage.setItem('cart',JSON.stringify(items))}
 
 
     increaseByOne = (id) => {
@@ -41,6 +42,9 @@ export default class Cart extends Component {
         
         if(items[ite].quantity > 1){
             items[ite].quantity= parseInt(items[ite].quantity)-1;  
+        }
+        else {
+            alert("Click Remove to delete the item")
         }     
         this.setState({items : items});
         this.setLocal(this.state.items);
@@ -62,7 +66,7 @@ export default class Cart extends Component {
 
 
         for(let i=0;i<items.length;i++){
-            total += (parseInt(items[i].price)*parseInt(items[i].quantity))
+            total += (parseInt(items[i].Price)*parseInt(items[i].quantity))
         }
 
         return (
@@ -76,14 +80,21 @@ export default class Cart extends Component {
 
     CreateListoOfItems = (props) => {
         let itemList = [];
-
+        // if(props.items.length < 1) {
+        //     return(
+        //         <h1>CART IS EMPTY!!</h1>
+        //     )
+        // }
+        // else {
+            
+        
         props.item.forEach((item) => {
             itemList.push(
                     <div id="item" key = {item.id}>
                         <div id="imgndisnbtn">
-                            <img src={item.image} alt="item"/>
-                            <p>{item.disc}</p>
-                            <p>Quantity : {item.quantity}, Price : {item.price}$</p>
+                            <img src={item.img} alt="item"/>
+                            <p>{item.description}</p>
+                            <p>Quantity : {item.quantity}, Price : {item.Price}$</p>
                             <button onClick ={() => {this.removeItem(item.id)}}>Remove</button>
                         </div>
                         <div id="btns">
@@ -95,8 +106,9 @@ export default class Cart extends Component {
         });
 
         return itemList;
-
     }
+
+    // }
 
     
     render() {

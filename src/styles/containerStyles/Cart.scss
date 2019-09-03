@@ -19,7 +19,7 @@
 
 #item{
     border : 1px solid black;
-    border-collapse: collapse;
+    margin-bottom: 2px;
     padding : 20px 20px 0 20px;
     height : auto;
 
@@ -61,6 +61,10 @@
                 &:hover {
                     background: #da190b;   
                 }
+                
+                &:active {
+                    transform : translateY(2px);
+                }
             }
     }
     
@@ -83,9 +87,15 @@
 
             &#plus {
                 background-color: #2196F3;
+
+
                 
                 &:hover {
                     background: #0b7dda;
+                }
+
+                &:active {
+                    transform : translateY(2px);
                 }
             }
             
@@ -93,6 +103,10 @@
                 background-color: #f44336;
                 &:hover {
                     background: #da190b;
+                }
+
+                &:active {
+                    transform : translateY(2px);
                 }
             }
 
