@@ -6,7 +6,7 @@
     display: grid;
     height: auto;
     // flex-direction: row;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: auto auto auto auto;
 
 }
 
@@ -31,7 +31,7 @@
 
 }
 
-.btn{
+.button{
     align-self: flex-end;
     border-radius: 50px
 }

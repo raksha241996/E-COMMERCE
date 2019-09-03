@@ -1,13 +1,8 @@
 import React from 'react';
-import shirt from '../assets/shirt.jpg'
 import '../styles/containerStyles/ProductsStyle.scss'
-import watch from '../assets/watch.jpg';
 import Button from '@material-ui/core/Button';
-import dress from '../assets/dress.jpg';
-import skirt from '../assets/skirt.jpg';
-import shoes from '../assets/shoes.jpg';
-import heels from '../assets/heels.jpg';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart'
+import axios from 'axios';
 
 export default class Products extends React.Component {
 
@@ -15,74 +10,32 @@ export default class Products extends React.Component {
         super(props)
 
         this.state={
-            disable:false
+            disable:false,
+            productsArray:[]
         }
 
-         this.productsArray =[
-
-            {
-                id: 1,
-                name: "Denim Shirt",
-                img: shirt,
-                description: "Nice Denim Shirt",
-                Price : 200, 
-                quantity : 1,
-            }
-            ,
-            {
-                id: 2,
-                name: "Redux Watch",
-                img: watch,
-                description: "Price : Rs.2000/- ",
-                Price : 2000, 
-                quantity : 1
-            },
-            {
-                id: 3,
-                name: "Dressberry dress",
-                img: dress,
-                description: "Price : Rs.700/- ",
-                Price : 700, 
-                quantity : 1
-            },
-            {
-                id: 4,
-                name: "Red Skirt",
-                img: skirt,
-                description: "Price : Rs.700/- ",
-                Price : 700, 
-                quantity : 1
-            }
-            ,
-            {
-                id: 5,
-                name: "Canvas shoes",
-                img: shoes,
-                description: "Canvas shoes",
-                Price : 1000, 
-                quantity : 1
-            },
-            {
-                id: 6,
-                name: "Pump Heel",
-                img: heels,
-                description: "Pump Heel",
-                Price : 1200, 
-                quantity : 1
-            }
-
-        ]
-        
-        
-        this.cart = []
+    
+        this.cart=[]
 
     }
 
     componentWillMount() {
-        JSON.stringify(this.productsArray);
-        localStorage.setItem("products", JSON.stringify(this.productsArray));
+        axios.get('https://api.myjson.com/bins/wvekv')
+        .then( (response) => {
+        //   console.log("response", response.data);
+          this.setState({
+          productsArray:response.data
+          });
+          JSON.stringify(this.state.productsArray);
+          localStorage.setItem("products", JSON.stringify(this.state.productsArray));
+        //   console.log("fetchUser", this.state.productsArray);
+        })
+        .catch( (error) => {
+          console.log(error);
+        }); 
+
         this.cart = JSON.parse(localStorage.getItem('cart'));
-       
+         
 
     }
 
@@ -112,6 +65,7 @@ export default class Products extends React.Component {
 
         var retrievedData = localStorage.getItem("products");
         var products = JSON.parse(retrievedData);
+        console.log('products retreived'+ products)
         return (
             <div className="mainClass">
                 {products.map(products => (
@@ -119,8 +73,8 @@ export default class Products extends React.Component {
                         <div className="imageBox">
                             <img src={products.img} alt={products.img}  />
                         </div>
-                        <p className="name">{products.name} <br /><br />{products.description}</p>
-                        <Button variant="contained" color="primary" className="btn"  onClick={()=>this.toggleButton(products)} >
+                        <p className="name">{products.name} <br /><br /> Price :${products.Price}</p>
+                        <Button variant="contained" color="primary" className="button"  onClick={()=>this.toggleButton(products)} >
                         <AddShoppingCartIcon />
                          Add To Cart !!
                         </Button>

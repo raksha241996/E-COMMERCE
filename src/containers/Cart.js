@@ -12,12 +12,7 @@ export default class Cart extends Component {
     }
 
     componentDidMount(){
-        // fetch('https://api.myjson.com/bins/ww7qv')   
-        // .then(res => res.json())
-        // .then(result => {this.setLocal(result.items)});
-        // this.getLocal('cart');
         this.setState({items : this.getLocal(), count : this.getCount()});   
-        // this.setCount(this.state.items.length);
     }
 
     componentWillUnmount() {
@@ -75,7 +70,7 @@ export default class Cart extends Component {
         }
 
         return (
-            <div>
+            <div id="calculations">
                 <p id="countItem">Total {items.length} items</p>
                 <hr />
                 <p id="totalPrice">Total Amount : ${total}</p>
@@ -106,7 +101,7 @@ export default class Cart extends Component {
         return itemList;
     }
 
-    // }
+  
 
     
     render() {
@@ -117,13 +112,13 @@ export default class Cart extends Component {
                             <this.CreateListoOfItems item={this.state.items}/>                                                                                         
                         </div>
                     </div>
-                    <div id="priceDetails">
-                        <div id="priceHead">Price Details</div>
-                        <div id="calculations" >
-                           <this.CalculatePrice item={this.state.items} />  
-                        </div>
-                                               
-                    </div>   
+                    {this.state.items.length ?
+                        <div id="priceDetails">
+                            <div id="priceHead">Price Details</div>
+                            <this.CalculatePrice item={this.state.items} />                        
+                        </div> 
+                           :
+                        <p id="noItems">No Items In Cart !!</p> }
                 </div>
         )
     }
