@@ -1,13 +1,8 @@
 import React from 'react';
-import shirt from '../assets/shirt.jpg'
 import '../styles/containerStyles/ProductsStyle.scss'
-import watch from '../assets/watch.jpg';
 import Button from '@material-ui/core/Button';
-import dress from '../assets/dress.jpg';
-import skirt from '../assets/skirt.jpg';
-import shoes from '../assets/shoes.jpg';
-import heels from '../assets/heels.jpg';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart'
+import axios from 'axios';
 
 export default class Products extends React.Component {
 
@@ -15,61 +10,31 @@ export default class Products extends React.Component {
         super(props)
 
         this.state={
-            disable:false
+            disable:false,
+            productsArray:[]
         }
 
-         this.productsArray =[
-
-            {
-                id: 1,
-                name: "Denim Shirt",
-                img: shirt,
-                description: "Price : Rs.200/- "
-            }
-            ,
-            {
-                id: 2,
-                name: "Redux Watch",
-                img: watch,
-                description: "Price : Rs.2000/- "
-            },
-            {
-                id: 3,
-                name: "Dressberry dress",
-                img: dress,
-                description: "Price : Rs.700/- "
-            },
-            {
-                id: 1,
-                name: "Red Skirt",
-                img: skirt,
-                description: "Price : Rs.700/- "
-            }
-            ,
-            {
-                id: 2,
-                name: "Canvas shoes",
-                img: shoes,
-                description: "Price : Rs.1000/- "
-            },
-            {
-                id: 3,
-                name: "Pump Heel",
-                img: heels,
-                description: "Price : Rs.1200/- "
-            }
-
-        ]
-        
-        
+    
         this.cart=[]
 
     }
 
     componentWillMount() {
-        JSON.stringify(this.productsArray);
-        localStorage.setItem("products", JSON.stringify(this.productsArray));
-       
+        axios.get('https://api.myjson.com/bins/110rw7')
+        .then( (response) => {
+          console.log("response", response.data);
+          this.setState({
+          productsArray:response.data
+          });
+          JSON.stringify(this.state.productsArray);
+          localStorage.setItem("products", JSON.stringify(this.state.productsArray));
+          console.log("fetchUser", this.state.productsArray
+          );
+        })
+        .catch( (error) => {
+          console.log(error);
+        }); 
+         
 
     }
 
@@ -85,6 +50,7 @@ export default class Products extends React.Component {
 
         var retrievedData = localStorage.getItem("products");
         var products = JSON.parse(retrievedData);
+        console.log('products retreived'+ products)
         return (
             <div className="mainClass">
                 {products.map(products => (
