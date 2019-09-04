@@ -1,6 +1,7 @@
 import React from 'react';
 import '../styles/containerStyles/App.scss'
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+
 import Home from './Home'
 import Products from './Products'
 import HomeIcon from '@material-ui/icons/Home'
@@ -12,6 +13,7 @@ class App extends React.Component {
 
   render() {
     return (
+      
       <Router>
         <nav >
           <div className="topnav">
@@ -24,7 +26,7 @@ class App extends React.Component {
         <Route path="/products/" component={Products} />
         <Route path="/cart/" component={Cart} />
       </Router>
-
+    
     );
   }
 }
