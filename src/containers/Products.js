@@ -1,7 +1,7 @@
 import React from 'react';
-import '../styles/containerStyles/ProductsStyle.scss'
-import Button from '@material-ui/core/Button';
-import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart'
+import DisplayProduct from '../components/DisplayProduct';
+import Pagination from '../components/Pagination';
+
 import axios from 'axios';
 
 export default class Products extends React.Component {
@@ -9,32 +9,52 @@ export default class Products extends React.Component {
     constructor(props) {
         super(props)
 
-        this.state={
+        this.state= {
             disable:false,
-            productsArray:[]
+            productsArray: JSON.parse(localStorage.getItem("products")),
+            currentPage : 1,
+            ProductsPerPage : 3,
         }
 
     
         this.cart=[]
+        const indexOfLastProduct = 0;
+        const indexOfFirstProduct = 0;
+        const currentProducts = 0;
 
     }
 
     componentWillMount() {
-        axios.get('https://api.myjson.com/bins/wvekv')
-        .then( (response) => {
-          this.setState({
-          productsArray:response.data
-          });
-          JSON.stringify(this.state.productsArray);
-          localStorage.setItem("products", JSON.stringify(this.state.productsArray));
-        })
-        .catch( (error) => {
-          console.log(error);
-        }); 
+        // axios.get('https://api.myjson.com/bins/wvekv')
+        // .then( (response) => {
+        //   this.setState({
+        //   productsArray:response.data
+        //   });
+        //   JSON.stringify(this.state.productsArray);
+        //   localStorage.setItem("products", JSON.stringify(this.state.productsArray));
+        // })
+        // .catch( (error) => {
+        //   console.log(error);
+        // }); 
+
+        // this.setState({productsArray : });
 
         this.cart = JSON.parse(localStorage.getItem('cart'));
-         
+        this.updateContent();
 
+    }
+
+    updateContent =()=>{
+        this.indexOfLastProduct = this.state.currentPage * this.state.ProductsPerPage;
+        this.indexOfFirstProduct = this.indexOfLastProduct - this.state.ProductsPerPage;
+        this.currentProducts = this.state.productsArray.slice(this.indexOfFirstProduct,this.indexOfLastProduct);      
+    }
+
+    paginate(num){
+        this.setState({currentPage : num}, () => {
+            this.updateContent();
+        });
+        
     }
 
     updateQuantity(product){
@@ -59,26 +79,14 @@ export default class Products extends React.Component {
 
     }
     render() {
-
-        var retrievedData = localStorage.getItem("products");
-        var products = JSON.parse(retrievedData);
-        // console.log('products retreived'+ products)
         return (
-            <section className="mainClass">
-                {products.map(products => (
-                    <article className="indivialProduct">
-                        <figure className="imageBox">
-                            <img src={products.img} alt={products.img} height='250px' width='200px'  />
-                        </figure>
-                        <p className="name">{products.name} <br /><br /> Price :${products.Price}</p>
-                        <Button variant="contained" color="primary" className="button"  onClick={()=>this.toggleButton(products)} >
-                        <AddShoppingCartIcon />
-                         Add To Cart !!
-                        </Button>
-                    </article>
-                ))}
-
-            </section>
+            <section>
+                <DisplayProduct products={this.currentProducts} toggleButton={this.toggleButton.bind(this)} />
+                <Pagination 
+                    postsPerPage={this.state.ProductsPerPage}
+                    totalPosts={this.state.productsArray.length}
+                    paginate={this.paginate.bind(this)} />
+                </section>
         );
     }
 }
