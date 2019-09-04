@@ -49,21 +49,16 @@ export default class Cart extends Component {
     removeItem = (id) => {
         let items = this.state.items;
         items = items.filter(x => x.id !== id);
-        console.log(items);
         this.setLocal(items);
         localStorage.setItem('count', items.length); 
         this.props.handleCount(items.length);
         this.setState({items : this.getLocal()});
         
-        // console.log(`Item with id ${id} Deleted`); 
     }
 
     CalculatePrice = (props) => {
         let total = 0;
         let items = props.item
-
-        console.log(items.length);
-
 
         for(let i=0;i<items.length;i++){
             total += (parseInt(items[i].Price)*parseInt(items[i].quantity))

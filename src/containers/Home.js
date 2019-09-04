@@ -1,7 +1,7 @@
 import React from 'react';
 import welcomeimage from '../assets/welcomeimage.jpg'
 import '../styles/containerStyles/HomeStyle.scss'
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { Route } from "react-router-dom";
 import Products from "../containers/Products"
 export default function Home() {
 

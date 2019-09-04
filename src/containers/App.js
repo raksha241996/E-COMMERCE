@@ -7,7 +7,6 @@ import HomeIcon from '@material-ui/icons/Home'
 import ShopIcon from '@material-ui/icons/Shop'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 import Cart from './Cart';
-import { Hidden } from '@material-ui/core';
 
 class App extends React.Component {
   constructor(props){
@@ -20,22 +19,33 @@ class App extends React.Component {
     this.handleCount = this.handleCount.bind(this);
   }
 
+  componentWillUpdate(){
+    parseInt(localStorage.getItem('count')) === 0 ? this.hideCount() : this.showCount();
+  }
+
   componentDidMount(){
-    this.setState({count : localStorage.getItem('count')})
+    this.setState({count : parseInt(localStorage.getItem('count')) })
   }
 
   handleCount(count){
-    this.setState({count : count});
+    this.setState({count : count}); 
+  }
+
+  hideCount(){
+    document.querySelector("#count").style.visibility = 'hidden';
+  }
+  showCount(){
+    document.querySelector("#count").style.visibility = 'visible';
   }
 
   render() {
     return (
       <Router>
-        <nav >
+        <nav>
           <div className="topnav">
             <a href="#home" tabIndex="1" ><Link to="/"><HomeIcon/>Home</Link></a>
             <a href="#produts" tabIndex="1"> <Link to="/products/"><ShopIcon/>Products</Link></a>
-            <a href="#cart"><Link to="/cart/"><ShoppingCartIcon/>Cart</Link> <span id="count">{ this.state.count==0 ? console.log(document.getElementById('count')) : this.state.count}</span> </a>
+            <a href="#cart"><Link to="/cart/"><ShoppingCartIcon/>Cart</Link> <span id="count">{ this.state.count }</span> </a>
           </div>
         </nav>
         <Route path="/" exact component={Home} />
