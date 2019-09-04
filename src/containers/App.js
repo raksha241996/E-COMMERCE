@@ -41,13 +41,13 @@ class App extends React.Component {
   render() {
     return (
       <Router>
-        <nav>
-          <div className="topnav">
+        <header>
+          <nav className="topnav">
             <a href="#home" tabIndex="1" ><Link to="/"><HomeIcon/>Home</Link></a>
             <a href="#produts" tabIndex="1"> <Link to="/products/"><ShopIcon/>Products</Link></a>
             <a href="#cart"><Link to="/cart/"><ShoppingCartIcon/>Cart</Link> <span id="count">{ this.state.count }</span> </a>
-          </div>
-        </nav>
+          </nav>
+        </header>
         <Route path="/" exact component={Home} />
         <Route path="/products/"  render={() =>  <Products handleCount = {this.handleCount} /> } />
         <Route path="/cart/" render={() =>  <Cart handleCount = {this.handleCount} />  } />

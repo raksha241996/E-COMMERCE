@@ -64,21 +64,21 @@ export default class Products extends React.Component {
         var products = JSON.parse(retrievedData);
         // console.log('products retreived'+ products)
         return (
-            <div className="mainClass">
+            <section className="mainClass">
                 {products.map(products => (
-                    <div className="indivialProduct">
-                        <div className="imageBox">
-                            <img src={products.img} alt={products.img}  />
-                        </div>
+                    <article className="indivialProduct">
+                        <figure className="imageBox">
+                            <img src={products.img} alt={products.img} height='250px' width='200px'  />
+                        </figure>
                         <p className="name">{products.name} <br /><br /> Price :${products.Price}</p>
                         <Button variant="contained" color="primary" className="button"  onClick={()=>this.toggleButton(products)} >
                         <AddShoppingCartIcon />
                          Add To Cart !!
                         </Button>
-                    </div>
+                    </article>
                 ))}
 
-            </div>
+            </section>
         );
     }
 }

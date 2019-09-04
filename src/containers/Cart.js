@@ -65,11 +65,11 @@ export default class Cart extends Component {
         }
 
         return (
-            <div id="calculations">
+            <article id="calculations">
                 <p id="countItem">Total {items.length} items</p>
                 <hr />
                 <p id="totalPrice">Total Amount : ${total}</p>
-            </div>
+            </article>
         )
     }
 
@@ -78,18 +78,18 @@ export default class Cart extends Component {
         
         props.item.forEach((item) => {
             itemList.push(
-                    <div id="item" key = {item.id}>
-                        <div id="imgndisnbtn">
+                    <article id="item" key = {item.id}>
+                        <article id="imgndisnbtn">
                             <img src={item.img} alt="item"/>
                                 <p>{item.description}</p>
                                 <p>Quantity : {item.quantity} <br />Price : $  {item.Price}</p>                          
                             <button onClick ={() => {this.removeItem(item.id)}}>Remove</button>
-                        </div>
-                        <div id="btns">
+                        </article>
+                        <article id="btns">
                             <button id="plus" onClick = {() => {this.increaseByOne(item.id)}}>+</button>
                             <button id="minus" onClick ={() => {this.decreaseByOne(item.id)}}>-</button>
-                        </div>    
-                    </div>    
+                        </article>    
+                    </article>    
             )
         });
 
@@ -101,20 +101,20 @@ export default class Cart extends Component {
     
     render() {
         return (
-            <div className="CartBody">                
-                    <div id="itemListDisplay">
-                        <div id="flexContainer">
+            <section className="CartBody">                
+                    <section id="itemListDisplay">
+                        <section id="flexContainer">
                             <this.CreateListoOfItems item={this.state.items}/>                                                                                         
-                        </div>
-                    </div>
+                        </section>
+                    </section>
                     {this.state.items.length ?
-                        <div id="priceDetails">
-                            <div id="priceHead">Price Details</div>
+                        <aside id="priceDetails">
+                            <article id="priceHead">Price Details </article>
                             <this.CalculatePrice item={this.state.items} />                        
-                        </div> 
+                        </aside> 
                            :
                         <p id="noItems">No Items In Cart !!</p> }
-                </div>
+                </section>
         )
     }
 }

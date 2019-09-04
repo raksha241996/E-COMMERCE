@@ -11,12 +11,8 @@ export default function Home() {
       
      
     <div className="Home">
-        <img src={welcomeimage} alt="welcome" width="100%" >
+        <img src={welcomeimage} alt="welcome" width="100%">
         </img>
-        {/* <button className="btn">Start Shopping</button> */}
-        {/* <Button variant="contained" color="primary" className="btn" >
-        Start Shopping !!
-      </Button> */}
       <Route path="/products/" component={Products} />
     </div>
     
