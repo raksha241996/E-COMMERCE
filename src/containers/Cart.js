@@ -7,16 +7,12 @@ export default class Cart extends Component {
         super(props);
         this.state = {
             items : []
-        };
+            };
 
     }
 
     componentDidMount(){
-        // fetch('https://api.myjson.com/bins/ww7qv')   
-        // .then(res => res.json())
-        // .then(result => {this.setLocal(result.items)});
-        // this.getLocal('cart');
-        this.setState({items : this.getLocal()});   
+        this.setState({items : this.getLocal(), count : this.getCount()});   
     }
 
     componentWillUnmount() {
@@ -24,14 +20,14 @@ export default class Cart extends Component {
     }
 
     getLocal = () => JSON.parse(localStorage.getItem('cart')) 
-    setLocal = (items) => {localStorage.setItem('cart',JSON.stringify(items))}
-
+    setLocal = (items) => {localStorage.setItem('cart',JSON.stringify(items));}
+    getCount = () => parseInt(localStorage.getItem('count'))
 
     increaseByOne = (id) => {
         let items = this.state.items;
         let ite = items.findIndex(x =>  x.id === id);
         items[ite].quantity= parseInt(items[ite].quantity)+1;
-        this.setState({items : items});
+        this.setState({items : items, count : this.getCount()});
         this.setLocal(this.state.items);
     }
     
@@ -46,62 +42,54 @@ export default class Cart extends Component {
         else {
             alert("Click Remove to delete the item")
         }     
-        this.setState({items : items});
+        this.setState({items : items, count : items.length});
         this.setLocal(this.state.items);
     }
 
     removeItem = (id) => {
         let items = this.state.items;
         items = items.filter(x => x.id !== id);
-        this.setState({items : items});
-        this.setLocal(this.state.items);
-        // console.log(`Item with id ${id} Deleted`); 
+        this.setLocal(items);
+        localStorage.setItem('count', items.length); 
+        this.props.handleCount(items.length);
+        this.setState({items : this.getLocal()});
+        
     }
 
     CalculatePrice = (props) => {
         let total = 0;
         let items = props.item
 
-        console.log(items.length);
-
-
         for(let i=0;i<items.length;i++){
             total += (parseInt(items[i].Price)*parseInt(items[i].quantity))
         }
 
         return (
-            <div>
-                <h3>Price of {items.length} items</h3>
+            <article id="calculations">
+                <p id="countItem">Total {items.length} items</p>
                 <hr />
-                <h3>Total Amount : {total}</h3>
-            </div>
+                <p id="totalPrice">Total Amount : ${total}</p>
+            </article>
         )
     }
 
     CreateListoOfItems = (props) => {
-        let itemList = [];
-        // if(props.items.length < 1) {
-        //     return(
-        //         <h1>CART IS EMPTY!!</h1>
-        //     )
-        // }
-        // else {
-            
+        let itemList = [];            
         
         props.item.forEach((item) => {
             itemList.push(
-                    <div id="item" key = {item.id}>
-                        <div id="imgndisnbtn">
+                    <article id="item" key = {item.id}>
+                        <article id="imgndisnbtn">
                             <img src={item.img} alt="item"/>
-                            <p>{item.description}</p>
-                            <p>Quantity : {item.quantity}, Price : {item.Price}$</p>
+                                <p>{item.description}</p>
+                                <p>Quantity : {item.quantity} <br />Price : $  {item.Price}</p>                          
                             <button onClick ={() => {this.removeItem(item.id)}}>Remove</button>
-                        </div>
-                        <div id="btns">
+                        </article>
+                        <article id="btns">
                             <button id="plus" onClick = {() => {this.increaseByOne(item.id)}}>+</button>
                             <button id="minus" onClick ={() => {this.decreaseByOne(item.id)}}>-</button>
-                        </div>    
-                    </div>    
+                        </article>    
+                    </article>    
             )
         });
 
@@ -113,21 +101,20 @@ export default class Cart extends Component {
     
     render() {
         return (
-            <div className="CartBody">                
-                    <div id="itemListDisplay">
-                        <div id="flexContainer">
+            <section className="CartBody">                
+                    <section id="itemListDisplay">
+                        <section id="flexContainer">
                             <this.CreateListoOfItems item={this.state.items}/>                                                                                         
-                        </div>
-                    </div>
-                    {this.state.items.length ? <div id="priceDetails">
-                        <div>Price Details</div>
-                        <this.CalculatePrice item={this.state.items} />                        
-                    </div>    : <p id="noItems">No Items In Cart</p> }
-                    {/* <div id="priceDetails">
-                        <div>Price Details</div>
-                        <this.CalculatePrice item={this.state.items} />                        
-                    </div>    */}
-                </div>
+                        </section>
+                    </section>
+                    {this.state.items.length ?
+                        <aside id="priceDetails">
+                            <article id="priceHead">Price Details </article>
+                            <this.CalculatePrice item={this.state.items} />                        
+                        </aside> 
+                           :
+                        <p id="noItems">No Items In Cart !!</p> }
+                </section>
         )
     }
 }

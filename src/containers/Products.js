@@ -22,14 +22,11 @@ export default class Products extends React.Component {
     componentWillMount() {
         axios.get('https://api.myjson.com/bins/wvekv')
         .then( (response) => {
-          console.log("response", response.data);
           this.setState({
           productsArray:response.data
           });
           JSON.stringify(this.state.productsArray);
           localStorage.setItem("products", JSON.stringify(this.state.productsArray));
-          console.log("fetchUser", this.state.productsArray
-          );
         })
         .catch( (error) => {
           console.log(error);
@@ -42,12 +39,15 @@ export default class Products extends React.Component {
 
     updateQuantity(product){
         let index = this.cart.findIndex(x => x.id === product.id);
-        if(index == -1){
+        console.log(product.id, "index is ", index)
+        if(index === -1){
             this.cart.push(product);
         }
         else {
-            this.cart[index].quantity = parseInt(this.cart[index].quantity)+1;            
-        }
+            this.cart[index].quantity = parseInt(this.cart[index].quantity)+1;
+            }
+        localStorage.setItem('count', this.cart.length);
+        this.props.handleCount(this.cart.length);
         
     }
 
@@ -62,23 +62,23 @@ export default class Products extends React.Component {
 
         var retrievedData = localStorage.getItem("products");
         var products = JSON.parse(retrievedData);
-        console.log('products retreived'+ products)
+        // console.log('products retreived'+ products)
         return (
-            <div className="mainClass">
+            <section className="mainClass">
                 {products.map(products => (
-                    <div className="indivialProduct">
-                        <div className="imageBox">
-                            <img src={products.img} alt={products.img}  />
-                        </div>
+                    <article className="indivialProduct">
+                        <figure className="imageBox">
+                            <img src={products.img} alt={products.img} height='250px' width='200px'  />
+                        </figure>
                         <p className="name">{products.name} <br /><br /> Price :${products.Price}</p>
                         <Button variant="contained" color="primary" className="button"  onClick={()=>this.toggleButton(products)} >
                         <AddShoppingCartIcon />
                          Add To Cart !!
                         </Button>
-                    </div>
+                    </article>
                 ))}
 
-            </div>
+            </section>
         );
     }
 }
