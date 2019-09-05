@@ -1,29 +1,14 @@
-import { createStore } from 'redux'
+import {createStore , applyMiddleware} from 'redux'
+import thunk from 'redux-thunk'
+import rootReducer from './reducers/rootReducer'
 
+const intialState ={};
 
-const reducer = (state, action) => {
+const middleware = [thunk];
 
-    switch (action.type) {
+const store = createStore(
+    rootReducer,
+    intialState,
+    applyMiddleware(...middleware));
 
-        case "ADD":
-            state = state + action.payload;
-            break;
-
-        case "SUBMIT":
-            break;
-
-
-    }
-    return state;
-}
-
-const store = createStore(reducer, 1);
-
-//trigger action
-store.subscribe(()=>{console.log('store updated')}); 
-
-store.dispatch({
-    type :"ADD",
-    payload:10
-
-});
+export default store;

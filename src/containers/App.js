@@ -1,13 +1,15 @@
 import React from 'react';
 import '../styles/containerStyles/App.scss'
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-
+import {Provider} from "react-redux"
 import Home from './Home'
 import Products from './Products'
 import HomeIcon from '@material-ui/icons/Home'
 import ShopIcon from '@material-ui/icons/Shop'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 import Cart from './Cart';
+import store from '../store'
+
 
 class App extends React.Component {
   constructor(props){
@@ -41,7 +43,7 @@ class App extends React.Component {
 
   render() {
     return (
-      
+      <Provider store={store}>
       <Router>
         <header>
           <nav className="topnav">
@@ -54,7 +56,7 @@ class App extends React.Component {
         <Route path="/products/"  render={() =>  <Products handleCount = {this.handleCount} /> } />
         <Route path="/cart/" render={() =>  <Cart handleCount = {this.handleCount} />  } />
       </Router>
-    
+    </Provider>
     );
   }
 }
