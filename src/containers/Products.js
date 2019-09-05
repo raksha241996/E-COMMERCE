@@ -23,7 +23,7 @@ class Products extends React.Component {
 
         this.cart = []
         const indexOfLastProduct = 3;
-        const indexOfFirstProduct = 0;
+        const indexOfFirstProduct = 2;
         
 
     }
@@ -57,12 +57,14 @@ class Products extends React.Component {
     }
 
 
-    paginate(num){
+    paginate(num , e){
         this.setState({currentPage : num}, () => {
             this.updateContent();
         });
         
     }
+
+   
     updateQuantity(product){
         let index = this.cart.findIndex(x => x.id === product.id);
         console.log(product.id, "index is ", index)
