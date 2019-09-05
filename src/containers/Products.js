@@ -50,7 +50,8 @@ export default class Products extends React.Component {
         this.currentProducts = this.state.productsArray.slice(this.indexOfFirstProduct,this.indexOfLastProduct);      
     }
 
-    paginate(num){
+    paginate(num, e){
+        // e.preventDefault();
         this.setState({currentPage : num}, () => {
         });
         
