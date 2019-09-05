@@ -1,7 +1,7 @@
 import React from 'react';
-import '../styles/containerStyles/ProductsStyle.scss'
-import Button from '@material-ui/core/Button';
-import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart'
+import DisplayProduct from '../components/DisplayProduct';
+import Pagination from '../components/Pagination';
+
 import axios from 'axios';
 import { connect } from 'react-redux'
 import productsAction from '../action/productsAction'
@@ -15,80 +15,96 @@ class Products extends React.Component {
 
         this.state = {
             disable: false,
-            productsArray: []
+            productsArray: [],
+            currentPage: 1,
+            ProductsPerPage: 3,
+            currentProducts: 0
         }
 
-
         this.cart = []
+        const indexOfLastProduct = 3;
+        const indexOfFirstProduct = 0;
+        
 
     }
 
-    componentWillMount() {
-
-        //calling action here
-        this.props.fetchProducts();
+    componentDidMount() {
+        this.getDataCall();
+        console.log("inside products page " + this.props.products)
         this.cart = JSON.parse(localStorage.getItem('cart'));
+        // this.updateContent();
+    }
+
+    getDataCall = () => {
+        this.props.fetchProducts().then(() => {
+
+            console.log("getData" + this.props.products);
+
+            this.setState({
+
+                productsArray: this.props.products,
+                // currentProducts :this.props.products.slice(this.indexOfFirstProduct, this.indexOfLastProduct)
+            }, )
+            this.updateContent();
+        }
+        );
 
     }
 
-    updateQuantity(product) {
+    updateContent = () => {
+        this.indexOfLastProduct = this.state.currentPage * this.state.ProductsPerPage;
+        this.indexOfFirstProduct = this.indexOfLastProduct - this.state.ProductsPerPage;
+    }
+
+
+    paginate(num){
+        this.setState({currentPage : num}, () => {
+            this.updateContent();
+        });
+        
+    }
+    updateQuantity(product){
         let index = this.cart.findIndex(x => x.id === product.id);
-        if (index == -1) {
+        console.log(product.id, "index is ", index)
+        if(index === -1){
             this.cart.push(product);
         }
         else {
-            this.cart[index].quantity = parseInt(this.cart[index].quantity) + 1;
-        }
-
+            this.cart[index].quantity = parseInt(this.cart[index].quantity)+1;
+            }
+        localStorage.setItem('count', this.cart.length);
+        this.props.handleCount(this.cart.length);
+        
     }
 
-    toggleButton(products) {
-        var newTotal = 0
-        var total = localStorage.getItem('total')
-        newTotal = JSON.parse(total) + 1
-        this.setState({ disable: true })
+    toggleButton( products){
+        this.setState({disable : true})
         alert("Item Added");
         this.updateQuantity(products);
         localStorage.setItem("cart", JSON.stringify(this.cart));
-        localStorage.setItem("total", JSON.stringify(newTotal))
-        console.log('newTotal' + newTotal)
 
     }
-    render() {
 
-        // var retrievedData = localStorage.getItem("products");
-        // var products = JSON.parse(retrievedData);
-        console.log('products 1' + this.props.products)
+   
+    render() {
+        if (this.props.products)
+            console.log("inside products page " + JSON.stringify(this.props.products))
+        else
+            console.log("inside products page stringify" + this.props.products)
 
         return (
-            <div className="mainClass">
+            <section>
+                   <Pagination
+                    postsPerPage={this.state.ProductsPerPage}
+                    totalPosts={this.props.products.length}
+                    paginate={this.paginate.bind(this)} />
+                <DisplayProduct products={this.props.products.slice(this.indexOfFirstProduct, this.indexOfLastProduct)} toggleButton={this.toggleButton.bind(this)} />
+            
+            </section>
 
-                {this.props.products.map(products => (
-                    <div className="indivialProduct">
-                        <div className="imageBox">
-                            <img src={products.img} alt={products.img}  />
-                        </div>
-                        <p className="name">{products.name} <br /><br /> Price :${products.email}</p>
-                        <Button variant="contained" color="primary" className="button"  onClick={()=>this.toggleButton(products)} >
-                        <AddShoppingCartIcon />
-                         Add To Cart !!
-                        </Button>
-                    </div>
-                ))}
-                {/* dummy code */}
-                {/* {this.props.products.map(products => (
-                    <div className="indivialProduct">
-                        <div className="imageBox">
-                        </div>
-                        <p className="name">{products.employee_name} <br /><br /> Price :${products.id}</p>
-                        <Button variant="contained" color="primary" className="button"  onClick={()=>this.toggleButton(products)} >
-                        <AddShoppingCartIcon />
-                         Add To Cart !!
-                        </Button>
-                    </div>
-                ))} */}
-            </div>
         );
+
+
     }
 }
 
