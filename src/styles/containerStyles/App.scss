@@ -8,6 +8,8 @@
   overflow: hidden;
   background-color: #333;
   display: flex;
+  height : auto;
+  width : 100%;
 }
 
 .topnav a {
@@ -28,38 +30,6 @@
 .topnav a.active {
   background-color: lightseagreen;
   color: white;
-}
-
-
-.Home {
-  position: relative;
-  width: 100%;
-
-  
-img{
-
-      width: 100%;
-      height: auto;
-  }
-
-.btn{
-
-      position: absolute;
-      top: 90%;
-      left: 50%;
-      cursor: pointer;
-      &:hover {
-          color:white;
-      }
-      width:100;
-      height: 100;
-      border: 2px solid #4CAF50;
-      border-radius: 10px;
-      border-color: transparent;
-      font-size: 16px;
-      margin: 4px 2px;
-  }
-  
 }
 
 #count {

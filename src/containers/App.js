@@ -39,7 +39,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <Router>
+      <Router> 
         <header>
           <nav className="topnav">
             <a href="#home" tabIndex="1" ><Link to="/"><HomeIcon/>Home</Link></a>

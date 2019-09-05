@@ -13,7 +13,7 @@ export default class Products extends React.Component {
             disable:false,
             productsArray: JSON.parse(localStorage.getItem("products")),
             currentPage : 1,
-            ProductsPerPage : 2,
+            ProductsPerPage : 5,
         }
 
     
