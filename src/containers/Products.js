@@ -13,7 +13,7 @@ export default class Products extends React.Component {
             disable:false,
             productsArray: JSON.parse(localStorage.getItem("products")),
             currentPage : 1,
-            ProductsPerPage : 3,
+            ProductsPerPage : 2,
         }
 
     
@@ -52,9 +52,12 @@ export default class Products extends React.Component {
 
     paginate(num){
         this.setState({currentPage : num}, () => {
-            this.updateContent();
         });
         
+    }
+
+    componentDidUpdate(){
+        this.updateContent();
     }
 
     updateQuantity(product){

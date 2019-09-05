@@ -19,19 +19,20 @@
     flex-flow: column;
 }
 
+
 #item{
     border : 1px solid black;
     margin-bottom: 2px;
-    padding : 20px 20px 0 20px;
+    padding : 20px 20px 5px 20px;
     font-size: 1.2rem;
     height : auto;
 
     #imgndisnbtn {
         display: flex;
         flex-direction : row;
-        justify-content: flex-start; 
-        align-content: center;
-        align-items: baseline;
+        justify-content: center; 
+        align-content: stretch;
+        align-items: stretch;
 
         img {   
                 flex : 0 0 100px;
@@ -39,14 +40,10 @@
                 width : 130px;
                 height : 150px;
             }
-
-        p { 
-            flex : 0 0 250px;
-            display: flex;
-            justify-content: stretch;
-            padding: 5px;
-            margin: auto; 
-            }
+        
+        section {
+            flex-grow : 1;
+        }
         
         button {
                 flex : 0 0 100px;
@@ -74,7 +71,7 @@
     
     #btns {
         display: flex;
-        justify-content: flex-start;
+        justify-content: center;
         justify-items: stretch;
         margin: 5px; 
 
@@ -122,12 +119,32 @@
     
 }
 
+
+#item-section{ 
+    display : flex;
+    flex-direction: column;
+    align-items: center;
+    margin : 5px;
+    p{
+        &#discr {
+            order: 1;
+        }
+
+        &#quant {
+            order : 2;            
+        }
+
+        &#price {
+            order:3;            
+        }
+    }
+}
+
 #priceDetails {
     float : right;
     background-color: white;
     width : 30%;
-    height : 150px;
-    margin-bottom: 1%;
+    height : 180px;
     border : 1px solid black;
 
     #priceHead{
@@ -147,13 +164,13 @@
         }
 
         #totalPrice {
-            padding : 5px 0 5px 5px;
+            padding : 5px 0 0px 5px;
         }
     }
 }
 
 .CartBody {
-    margin : 3% 5% 1% 5%;
+    margin : 3% 5% 2% 5%;
     // background-color : #f1f3f6;
 }
 
@@ -162,3 +179,101 @@
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     align-self: center;
 }
+
+
+@media only screen and (max-width: 750px) {
+
+    #itemListDisplay {
+        display: inline-block;
+        width : 100%;
+        height : auto;
+        margin-right: 1%;    
+        background-color : white;
+    }
+    
+    #item{
+        border : 1px solid black;
+        margin-bottom: 2px;
+        padding : 10px 10px 3px 10px;
+        font-size: 1rem;
+        height : 200px;
+
+        #imgndisnbtn {
+            display: flex;
+            flex-direction : row;
+            justify-content: center; 
+            align-content: stretch;
+            align-items: stretch;
+    
+            img {   
+                    flex : 0 0 100px;
+                    left : 0%;
+                    width : 80px;
+                    height : 100px;
+                }
+            
+            section {
+                flex-grow : 1;
+            }
+            
+            button {
+                    flex : 0 0 100px;
+                    border: none;
+                    color: white;
+                    outline:none;
+                    border-radius: 5%;
+                    background-color: #f44336;
+                    align-self: end;
+                    font-size: 1.5rem;
+                    width : 80px;
+                    height : 40px;
+                    margin: auto;
+                    right : -50px;
+    
+                    &:hover {
+                        background: #da190b;   
+                    }
+                    
+                    &:active {
+                        transform : translateY(2px);
+                    }
+                }
+        }
+    }
+
+    #priceDetails {
+        // position: fixed;
+        margin-top : 1%;
+        bottom: 0;
+        background-color: white;
+        width : 100%;
+        height : auto;
+        border : 1px solid black;
+        margin-bottom: 5px;
+    
+        #priceHead{
+            background: black;
+            color: white;
+            padding : 2px;
+            text-align: center;
+            font-size: 1.2rem;
+            margin : 0;
+        }
+        #calculations {
+            font-size: 18px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        
+            #line{
+                display: none;
+            }
+            
+            p{ 
+                display: inline;
+                margin : 0;
+            }
+        }
+    }
+
+  }

@@ -67,7 +67,7 @@ export default class Cart extends Component {
         return (
             <article id="calculations">
                 <p id="countItem">Total {items.length} items</p>
-                <hr />
+                <section id="line"><hr /></section>
                 <p id="totalPrice">Total Amount : ${total}</p>
             </article>
         )
@@ -81,9 +81,13 @@ export default class Cart extends Component {
                     <article id="item" key = {item.id}>
                         <article id="imgndisnbtn">
                             <img src={item.img} alt="item"/>
-                                <p>{item.description}</p>
-                                <p>Quantity : {item.quantity} <br />Price : $  {item.Price}</p>                          
+                                <section id="item-section">
+                                    <p id="discr">{item.description}</p>
+                                    <p id="quant">Quantity : {item.quantity}</p>
+                                    <p id="price">Price : $  {item.Price}</p>    
+                                </section>                      
                             <button onClick ={() => {this.removeItem(item.id)}}>Remove</button>
+                            
                         </article>
                         <article id="btns">
                             <button id="plus" onClick = {() => {this.increaseByOne(item.id)}}>+</button>
