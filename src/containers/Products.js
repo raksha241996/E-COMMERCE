@@ -5,7 +5,7 @@ import Pagination from '../components/Pagination';
 import axios from 'axios';
 import { connect } from 'react-redux'
 import productsAction from '../action/productsAction'
-import { bindActionCreators } from '../../../../Library/Caches/typescript/3.5/node_modules/redux';
+import { bindActionCreators } from 'redux';
 
 class Products extends React.Component {
 
@@ -17,20 +17,17 @@ class Products extends React.Component {
             disable: false,
             productsArray: [],
             currentPage: 1,
-            ProductsPerPage: 3,
-            currentProducts: 0
+            ProductsPerPage: 5,
         }
 
-        this.cart = []
-        const indexOfLastProduct = 3;
-        const indexOfFirstProduct = 2;
-        
+        this.cart = [];        
 
     }
 
-    componentDidMount() {
+    componentWillMount() {
         this.getDataCall();
-        console.log("inside products page " + this.props.products)
+        // console.log("inside products page " + this.props.products)
+
         this.cart = JSON.parse(localStorage.getItem('cart'));
         // this.updateContent();
     }
@@ -38,14 +35,10 @@ class Products extends React.Component {
     getDataCall = () => {
         this.props.fetchProducts().then(() => {
 
-            console.log("getData" + this.props.products);
+            // console.log("getData" + this.props.products);
 
-            this.setState({
-
-                productsArray: this.props.products,
-                // currentProducts :this.props.products.slice(this.indexOfFirstProduct, this.indexOfLastProduct)
-            }, )
-            this.updateContent();
+            this.setState({ productsArray: this.props.products }, this.updateContent() );
+            
         }
         );
 
@@ -54,10 +47,11 @@ class Products extends React.Component {
     updateContent = () => {
         this.indexOfLastProduct = this.state.currentPage * this.state.ProductsPerPage;
         this.indexOfFirstProduct = this.indexOfLastProduct - this.state.ProductsPerPage;
+        this.currentProducts = this.state.productsArray.slice(this.indexOfFirstProduct,this.indexOfLastProduct);
     }
 
 
-    paginate(num , e){
+    paginate(num){
         this.setState({currentPage : num}, () => {
             this.updateContent();
         });
@@ -67,7 +61,7 @@ class Products extends React.Component {
    
     updateQuantity(product){
         let index = this.cart.findIndex(x => x.id === product.id);
-        console.log(product.id, "index is ", index)
+        // console.log(product.id, "index is ", index)
         if(index === -1){
             this.cart.push(product);
         }
@@ -89,19 +83,18 @@ class Products extends React.Component {
 
    
     render() {
-        if (this.props.products)
-            console.log("inside products page " + JSON.stringify(this.props.products))
-        else
-            console.log("inside products page stringify" + this.props.products)
+        // if (this.props.products)
+        //     console.log("inside products page " + JSON.stringify(this.props.products))
+        // else
+        //     console.log("inside products page stringify" + this.props.products)
 
         return (
             <section>
-                   <Pagination
-                    postsPerPage={this.state.ProductsPerPage}
-                    totalPosts={this.props.products.length}
-                    paginate={this.paginate.bind(this)} />
-                <DisplayProduct products={this.props.products.slice(this.indexOfFirstProduct, this.indexOfLastProduct)} toggleButton={this.toggleButton.bind(this)} />
-            
+            <DisplayProduct products={this.props.products.slice(this.indexOfFirstProduct, this.indexOfLastProduct)} toggleButton={this.toggleButton.bind(this)} />
+            <Pagination
+                postsPerPage={this.state.ProductsPerPage}
+                totalPosts={this.props.products.length}
+                paginate={this.paginate.bind(this)} />
             </section>
 
         );

@@ -8,7 +8,7 @@ const DisplayProduct = ({products, toggleButton}) => {
     return (
         <section className="mainClass">
             {products && (products.map(product => (
-                    <article className="indivialProduct">
+                    <article key={product.id} className="indivialProduct">
                         <figure className="imageBox">
                             <img src={product.img} alt={product.img} height='250px' width='200px'  />
                         </figure>
