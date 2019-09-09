@@ -5,7 +5,7 @@ import Adapter from 'enzyme-adapter-react-16';
 
 configure({ adapter: new Adapter() });
 
-describe('App component test with Enzyme', () => {
+describe('Home component test with Enzyme', () => {
    it('renders without crashing', () => {
       const wrapper =   shallow(<Home />);
          const instance = wrapper.instance()

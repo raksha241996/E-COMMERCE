@@ -49,7 +49,6 @@ describe('Product component test with Enzyme', () => {
        const wrapper =   shallow(  
            <Products store={store} {...props}/>
          );
-         
           const instance = wrapper.instance()
           instance.cart=[]
           instance.toggleButton(props.products)
