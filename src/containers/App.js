@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/containerStyles/App.scss'
+import '../styles/containerStyles/App.scss';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import {Provider} from "react-redux"
 import Home from './Home'
@@ -34,11 +34,14 @@ class App extends React.Component {
   }
 
   hideCount(){
-    document.querySelector("#count").style.visibility = 'hidden';
+    if( document.getElementById('count')){
+    document.getElementById('count').style.visibility = 'hidden';}
   }
   showCount(){
-    document.querySelector("#count").style.visibility = 'visible';
+    if( document.getElementById('count')){
+    document.querySelector('#count').style.visibility = 'visible';
   }
+}
 
   render() {
     return (
@@ -58,6 +61,11 @@ class App extends React.Component {
     </Provider>
     );
   }
+
+
+
 }
+
+
 
 export default App;

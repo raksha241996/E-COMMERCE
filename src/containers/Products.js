@@ -1,13 +1,11 @@
 import React from 'react';
 import DisplayProduct from '../components/DisplayProduct';
 import Pagination from '../components/Pagination';
-
-import axios from 'axios';
 import { connect } from 'react-redux'
 import productsAction from '../action/productsAction'
 import { bindActionCreators } from '../../../../Library/Caches/typescript/3.5/node_modules/redux';
 
-class Products extends React.Component {
+export class Products extends React.Component {
 
 
     constructor(props) {
@@ -24,7 +22,7 @@ class Products extends React.Component {
         this.cart = []
         const indexOfLastProduct = 3;
         const indexOfFirstProduct = 2;
-        
+
 
     }
 
@@ -32,10 +30,11 @@ class Products extends React.Component {
         this.getDataCall();
         console.log("inside products page " + this.props.products)
         this.cart = JSON.parse(localStorage.getItem('cart'));
-        // this.updateContent();
+        
     }
 
     getDataCall = () => {
+        //making API call here
         this.props.fetchProducts().then(() => {
 
             console.log("getData" + this.props.products);
@@ -43,8 +42,7 @@ class Products extends React.Component {
             this.setState({
 
                 productsArray: this.props.products,
-                // currentProducts :this.props.products.slice(this.indexOfFirstProduct, this.indexOfLastProduct)
-            }, )
+            })
             this.updateContent();
         }
         );
@@ -57,51 +55,49 @@ class Products extends React.Component {
     }
 
 
-    paginate(num , e){
-        this.setState({currentPage : num}, () => {
+    paginate(num,e) {
+
+       
+        this.setState({ currentPage: num }, () => {
             this.updateContent();
         });
-        
+
     }
 
-   
-    updateQuantity(product){
+
+    updateQuantity(product) {
         let index = this.cart.findIndex(x => x.id === product.id);
         console.log(product.id, "index is ", index)
-        if(index === -1){
+        if (index === -1) {
             this.cart.push(product);
         }
         else {
-            this.cart[index].quantity = parseInt(this.cart[index].quantity)+1;
-            }
+            this.cart[index].quantity = parseInt(this.cart[index].quantity) + 1;
+        }
         localStorage.setItem('count', this.cart.length);
         this.props.handleCount(this.cart.length);
-        
+
     }
 
-    toggleButton( products){
-        this.setState({disable : true})
+    toggleButton(products) {
+        this.setState({ disable: true })
         alert("Item Added");
         this.updateQuantity(products);
         localStorage.setItem("cart", JSON.stringify(this.cart));
 
     }
 
-   
-    render() {
-        if (this.props.products)
-            console.log("inside products page " + JSON.stringify(this.props.products))
-        else
-            console.log("inside products page stringify" + this.props.products)
+
+    render (){
 
         return (
             <section>
-                   <Pagination
+                <Pagination
                     postsPerPage={this.state.ProductsPerPage}
                     totalPosts={this.props.products.length}
                     paginate={this.paginate.bind(this)} />
                 <DisplayProduct products={this.props.products.slice(this.indexOfFirstProduct, this.indexOfLastProduct)} toggleButton={this.toggleButton.bind(this)} />
-            
+
             </section>
 
         );
@@ -125,3 +121,4 @@ const mapStateToProps = state => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Products)
+
