@@ -1,7 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`App component test with Enzyme renders without crashing 1`] = `ShallowWrapper {}`;
-
 exports[`Product component test with Enzyme renders without crashing 1`] = `ShallowWrapper {}`;
 
 exports[`Product component test with Enzyme toggleButton calls without crashing 1`] = `ShallowWrapper {}`;
